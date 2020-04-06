@@ -201,8 +201,8 @@ local function showVekOrderOverlay()
 	-----------
 	local pawns = extract_table(Board:GetPawns(TEAM_PLAYER))
 	for _, id in ipairs(pawns) do
+		local pawn = Board:GetPawn(id)
 		if not isNeutral(id) and isPowered(id) then
-			local pawn = Board:GetPawn(id)
 			count_vek = count_vek + 1
 			
 			local loc = tileToScreen(pawn:GetSpace())
