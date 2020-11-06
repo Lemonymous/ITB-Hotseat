@@ -27,59 +27,61 @@ function mod:metadata()
 	modApi:addGenerationOption("option_hotseat_core_add", "+ Core", "Additional cores gained from missions and pods", {values = {"Disabled",1,2}})
 end
 
+local components = {
+	"modApiExt/modApiExt",
+	"LApi/LApi",
+	"libs/hotkey",
+	"libs/bonusMission",
+	"libs/bonusStore",
+	"portraits",
+	"libs/missionExt",
+	"libs/teamTurn",
+	"libs/moveUtils",
+	"libs/selected",
+	"libs/highlighted",
+	"libs/scheduledMissionHook",
+	"libs/menu",
+	"phases",
+	"phases/spawn",
+	"phases/playerturn",
+	"phases/transition",
+	"suppressEnemyTurn",
+	"weaponPreview/api",
+	"timeAttack",
+	"resetTurn",
+	"rewardRebalance",
+	"compatibility/vanilla_units",
+	"compatibility/vanilla_missions",
+	"compatibility/into_the_wild",
+	"compatibility/bots_and_bugs",
+	"compatibility/vek_hive_assault",
+	"compatibility/evolved_vek",
+	"compatibility/more_bosses",
+}
+
 function mod:init()
-	modUtils = require(self.scriptPath .."modApiExt/modApiExt")
-	modUtils:init()
 	
-	tarmeans_dll_hotseat = require(self.scriptPath .."libs/CUtils")
-	
-	for _, v in ipairs{
-		"libs/hotkey",
-		"libs/bonusMission",
-		"libs/bonusStore",
-		"suppressEnemyTurn",
-		"phases",
-		"phases/spawn",
-		"phases/playerturn",
-		"phases/transition",
-		"portraits",
-		"resetTurn",
-		"compatibility/vanilla_units",
-		"compatibility/vanilla_missions",
-		"compatibility/into_the_wild",
-		"compatibility/bots_and_bugs",
-		"compatibility/evolved_vek",
-		"compatibility/vek_hive_assault",
-		"compatibility/more_bosses",
-	} do
-		require(self.scriptPath .. v)
+	-- initialize components
+	for _, subpath in ipairs(components) do
+		local name = self.scriptPath .. subpath
+		local comp = require(name)
+		
+		if type(comp) == 'table' and comp.init then
+			comp:init()
+		end
 	end
 end
 
 function mod:load(options, version)
-	modUtils:load(self, options, version)
 	
-	for _,v in ipairs{
-		"libs/missionExt",
-		"libs/teamTurn",
-		"libs/moveUtils",
-		"libs/selected",
-		"libs/highlighted",
-		"libs/scheduledMissionHook",
-		"libs/menu",
-		"phases",
-		"phases/spawn",
-		"phases/playerturn",
-		"phases/transition",
-		"suppressEnemyTurn",
-		"weaponPreview/api",
-		"timeAttack",
-		"resetTurn",
-		"rewardRebalance",
-		"compatibility/evolved_vek",
-		"compatibility/more_bosses",
-	} do
-		require(self.scriptPath .. v):load()
+	-- load components
+	for _, subpath in ipairs(components) do
+		local name = self.scriptPath .. subpath
+		local comp = require(name)
+		
+		if type(comp) == 'table' and comp.load then
+			comp:load(self, options, version)
+		end
 	end
 end
 

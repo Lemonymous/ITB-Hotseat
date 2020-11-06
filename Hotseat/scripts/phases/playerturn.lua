@@ -23,7 +23,6 @@ local UiNumber = require(path .."ui/number")
 local UiHealth = require(path .."ui/health")
 local UiIcon = require(path .."ui/icon")
 local uiEndTurn, uiEndHidden, uiEndMechTurn, uiOverlay, uiOrder, uiButton
-local lib = tarmeans_dll_hotseat
 local a = ANIMS
 local this = {}
 
@@ -225,7 +224,7 @@ local function showVekOrderOverlay()
 	local pawns = extract_table(Board:GetPawns(TEAM_ANY))
 	for _, id in ipairs(pawns) do
 		local pawn = Board:GetPawn(id)
-		local hp_max = lib.GetMaxHealth(pawn)
+		local hp_max = pawn:GetMaxHealth()
 		local hp = pawn:GetHealth()
 		local loc = tileToScreen(pawn:GetSpace())
 		
