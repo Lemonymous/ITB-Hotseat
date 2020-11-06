@@ -1,0 +1,2 @@
+isTileHighlighted
+getWeaponClass
