@@ -1,7 +1,7 @@
 
 local path = GetParentPath(...)
 
-VERSION = "0.1.0"
+VERSION = "0.2.0"
 
 if LApi == nil or modApi:isVersion(VERSION, LApi.version) then
 	LApi = LApi or {
