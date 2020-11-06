@@ -12,6 +12,12 @@ function hooks:addGameLoadedHook(fn)
 	table.insert(self.gameLoadedHooks,fn)
 end
 
+hooks.tileDirectionChangedHooks = {}
+function hooks:addTileDirectionChangedHook(fn)
+	assert(type(fn) == "function")
+	table.insert(self.tileDirectionChangedHooks,fn)
+end
+
 hooks.tileHighlightedHooks = {}
 function hooks:addTileHighlightedHook(fn)
 	assert(type(fn) == "function")

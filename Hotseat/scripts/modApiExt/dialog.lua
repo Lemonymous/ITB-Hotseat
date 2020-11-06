@@ -81,17 +81,29 @@ function dialog:addRuledDialogVoicePopup(segment, cast)
 	if not cast.target then cast.target = -1 end
 	if not cast.other then cast.other = -1 end
 
-	if segment.main ~= nil then
-		AddVoicePopup(segment.main, cast.main, cast)
-	end
-	if segment.target ~= nil then
-		AddVoicePopup(segment.target, cast.target, cast)
-	end
-	if segment.other ~= nil then
-		AddVoicePopup(segment.other, cast.other, cast)
-	end
-	if segment.ceo ~= nil then
-		AddVoicePopup(segment.ceo, PAWN_ID_CEO, cast)
+	local count = 0
+	for role, personalityDialog in pairs(segment) do
+		-- Enforce a single role per dialog segment
+		if count == 1 then
+			error("A dialog segment may only define a dialog for a single role!")
+		end
+		count = count + 1
+
+		-- Get the pawn that was cast in this role
+		local actor = cast[role]
+
+		-- Override CEO role
+		if role == "ceo" then
+			actor = PAWN_ID_CEO
+		end
+
+		-- Game expects missing roles to be marked by id -1
+		if not actor then
+			cast[role] = -1
+			actor = -1
+		end
+
+		AddVoicePopup(personalityDialog, actor, cast)
 	end
 end
 
@@ -158,7 +170,7 @@ function dialog:triggerRuledDialog(dialogEvent, protoCast, customOdds)
 		if
 			execute            and
 			eventInfo.Unique   and
-			list_contains(GAME.uniqueRuledDialogs, hash_o(eventInfo))
+			list_contains(GAME.uniqueRuledDialogs, approximateHash(eventInfo))
 		then
 			execute = false
 		end
@@ -198,7 +210,7 @@ function dialog:triggerRuledDialog(dialogEvent, protoCast, customOdds)
 		end
 
 		if eventInfo.Unique then
-			table.insert(GAME.uniqueRuledDialogs, hash_o(eventInfo))
+			table.insert(GAME.uniqueRuledDialogs, approximateHash(eventInfo))
 		end
 
 		-- Pick a random dialog set inside the ruled dialog

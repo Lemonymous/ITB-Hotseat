@@ -77,7 +77,7 @@ end
 return {
 	id = "kf_ModUtils",
 	name = "Modding Utilities",
-	version = "1.12.256", -- mid release version. 255 total commits
+	version = "1.12.268",
 	requirements = {},
 	init = init,
 	load = load

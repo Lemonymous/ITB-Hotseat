@@ -70,11 +70,11 @@ function modApiExtHooks:trackAndUpdatePawns(mission)
 				if pd.undoPossible ~= undo then
 					-- Undo was possible in previous game update, but no longer is.
 					-- Positions are different, which means that the undo was *not*
-					-- disabled due to skill usage on a pawn -- swap skills
-					-- are not instant, so we wouldn't register change in *both*
-					-- undo state AND pawn position in a single update if that were
-					-- the case. So it has to be the 'undo move' option.
-					if pd.undoPossible and not undo and pd.loc ~= p then
+					-- disabled due to skill usage on a pawn as that would make the pawn inactive
+					-- while most skills are not instant, leap and dash skills are problematic
+					-- as undo state changes at the same time as a move
+					-- So it has to be the 'undo move' option.
+					if pd.undoPossible and not undo and pd.loc ~= p and pawn:IsActive() then
 						self.dialog:triggerRuledDialog("MoveUndo", { main = id })
 						modApiExt_internal.firePawnUndoMoveHooks(mission, pawn, pd.loc)
 					end
@@ -292,13 +292,19 @@ function modApiExtHooks:updateTiles()
 	if Board then
 		if not GAME.trackedPods then GAME.trackedPods = {} end
 
-		local mtile = mouseTile()
-		if modApiExt_internal.currentTile ~= mtile then
+		local mTile, mTileDir = mouseTileAndEdge()
+
+		if modApiExt_internal.currentTileDirection ~= mTileDir then
+			modApiExt_internal.fireTileDirectionChangedHooks(mission, mTile, mTileDir)
+			modApiExt_internal.currentTileDirection = mTileDir
+		end
+
+		if modApiExt_internal.currentTile ~= mTile then
 			if modApiExt_internal.currentTile then -- could be nil
 				modApiExt_internal.fireTileUnhighlightedHooks(mission, modApiExt_internal.currentTile)
 			end
 
-			modApiExt_internal.currentTile = mtile
+			modApiExt_internal.currentTile = mTile
 
 			if modApiExt_internal.currentTile then -- could be nil
 				modApiExt_internal.fireTileHighlightedHooks(mission, modApiExt_internal.currentTile)
@@ -553,7 +559,7 @@ modApiExtHooks.missionUpdate = function(mission)
 	-- the missionUpdate hook.
 	-- Set it here, in case we load into a game in progress (missionStart
 	-- is not executed then)
-	if not modApiExt_internal.mission and mission then
+	if mission then
 		modApiExt_internal.mission = mission
 	end
 	if Board and not Board.gameBoard then
