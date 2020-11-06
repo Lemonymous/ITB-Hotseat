@@ -8,7 +8,7 @@ local c = deco.colors.transparent
 function this:new()
 	Ui2.new(self)
 	
-	self:widthpx(200):heightpx(60)
+	self:widthpx(225):heightpx(60)
 	self:decorate{DecoButton2(c,c,c,c)}
 end
 
