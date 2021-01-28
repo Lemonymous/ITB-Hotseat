@@ -55,7 +55,7 @@ end
 
 phases.addVekTurnStartHook(function()
 	if vekTime then
-		createUi(vekTime * Board:GetPawnCount(TEAM_ENEMY))
+		createUi(vekTime * Board:GetPawnCount(TEAM_PLAYER))
 	elseif mechTime then
 		createUi(mechTime)
 	end
