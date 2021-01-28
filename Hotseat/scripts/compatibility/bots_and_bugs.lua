@@ -61,5 +61,7 @@ function lmn_ShieldBotAtk1:GetSkillEffect(p1, p2)
 	return ret
 end
 
-modApi:appendAsset("img/weapons/lmn_GardenAtk1.png", resourcePath .."img/compatibility/GardenAtk1.png")
-lmn_Garden_Atk.Icon = "weapons/lmn_GardenAtk1.png"
+if lmn_Garden_Atk then
+	modApi:appendAsset("img/weapons/lmn_GardenAtk1.png", resourcePath .."img/compatibility/GardenAtk1.png")
+	lmn_Garden_Atk.Icon = "weapons/lmn_GardenAtk1.png"
+end
