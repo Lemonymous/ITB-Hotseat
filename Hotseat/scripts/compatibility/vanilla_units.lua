@@ -110,12 +110,34 @@ function ScorpionAtkB:GetSkillEffect(p1, p2, ...)
 	return ret
 end
 
+local old = SpiderAtk1.GetTargetArea
+function SpiderAtk1:GetTargetArea(p, ...)
+	local ret = old(self, p, ...)
+	for i = 1, ret:size() do
+		if Board:IsPod(ret:index(i)) then
+			ret:erase(i)
+		end
+	end
+	return ret
+end
+
 local old = SpiderAtk1.GetSkillEffect
 function SpiderAtk1:GetSkillEffect(p1, p2)
 	local ret = old(self, p1, p2, SpiderAtk1)
 	ret:AddScript(string.format("local p = %s; Board:GetPawn(p):FireWeapon(p, 1)", p2:GetString()))
 	ret:AddDelay(0.017)
 	ret:AddScript(string.format("Board:GetPawn(%s):SetActive(false)", p2:GetString()))
+	return ret
+end
+
+local old = BlobberAtk1.GetTargetArea
+function BlobberAtk1:GetTargetArea(...)
+	local ret = old(self, ...)
+	for i = 1, ret:size() do
+		if Board:IsPod(ret:index(i)) then
+			ret:erase(i)
+		end
+	end
 	return ret
 end
 
