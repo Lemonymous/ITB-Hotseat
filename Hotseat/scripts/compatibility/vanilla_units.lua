@@ -154,6 +154,9 @@ local function isBurrower(pawn)
 	return _G[pawn:GetType()].Burrows
 end
 
+local PATH_JUMPS = 6
+local PATH_BURROWS = 7
+
 local old = Move.GetTargetArea
 function Move:GetTargetArea(p, ...)
 	local ret = old(self, p, ...)
@@ -163,6 +166,14 @@ function Move:GetTargetArea(p, ...)
 			if Board:IsPod(curr) then
 				weaponPreview:AddColor(curr, color_invalid)
 				ret:erase(i)
+			end
+			if Board:GetTerrain(curr) == TERRAIN_WATER then
+				if
+					Pawn:GetPathProf() % 16 == PATH_JUMPS   or
+					Pawn:GetPathProf() % 16 == PATH_BURROWS
+				then
+					ret:erase(i)
+				end
 			end
 		end
 	end
