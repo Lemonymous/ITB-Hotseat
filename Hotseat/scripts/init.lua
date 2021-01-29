@@ -2,8 +2,8 @@
 local mod = {
 	id = "lmn_hotseat",
 	name = "Hotseat",
-	version = "0.4.0",
-	modApiVersion = "2.3.5",
+	version = "0.5.0",
+	modApiVersion = "2.5.4",
 	icon = "img/mod_icon.png",
 	-- initialize mods that adds enemies first.
 	requirements = {
