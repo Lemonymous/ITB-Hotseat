@@ -399,7 +399,7 @@ function Mission:SpawnPawns(count, ...)
 	if self ~= Mission_Test and self.Initialized then
 		
 		local spawns = {}
-		for i = 1, count do
+		for i = 1, count or -1 do
 			local pawn = self:NextPawn()
 			spawns[#spawns+1] = pawn:GetType()
 		end

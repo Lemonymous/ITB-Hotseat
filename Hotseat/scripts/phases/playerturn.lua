@@ -68,7 +68,7 @@ local function flashPlayerPawns(r, g ,b)
 	for _, id in ipairs(pawns) do
 		local pawn = Board:GetPawn(id)
 		
-		if pawn:IsActive() then
+		if pawn:IsActive()and not isNeutral(id) then
 			Board:Ping(pawn:GetSpace(), GL_Color(r, g, b))
 		end
 	end

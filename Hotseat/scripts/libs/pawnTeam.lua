@@ -15,12 +15,10 @@ function this:save(m, id)
 	
 	if pawn then
 		local team = pawn:GetTeam()
-		if not isNeutral(id) then
-			if team == TEAM_ENEMY then
-				table.insert(data.vek, id)
-			elseif team == TEAM_PLAYER then
-				table.insert(data.mech, id)
-			end
+		if team == TEAM_ENEMY then
+			table.insert(data.vek, id)
+		elseif team == TEAM_PLAYER then
+			table.insert(data.mech, id)
 		end
 	end
 end
@@ -32,15 +30,13 @@ function this:swap(id, setActivity)
 	
 	if pawn then
 		local team = pawn:GetTeam()
-		if not isNeutral(id) then
-			if team == TEAM_ENEMY then
-				pawn:SetTeam(TEAM_PLAYER)
-				if setActivity then
-					pawn:SetActive(true)
-				end
-			elseif team == TEAM_PLAYER then
-				pawn:SetTeam(TEAM_ANY)
+		if team == TEAM_ENEMY then
+			pawn:SetTeam(TEAM_PLAYER)
+			if setActivity then
+				pawn:SetActive(true)
 			end
+		elseif team == TEAM_PLAYER then
+			pawn:SetTeam(TEAM_ANY)
 		end
 	end
 end
