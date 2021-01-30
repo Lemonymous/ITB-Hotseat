@@ -259,13 +259,12 @@ local old = Move.GetTargetArea
 function Move:GetTargetArea(p, ...)
 	local ret = old(self, p, ...)
 	if phases.isPhase("vekTurn") then
-		for i = 1, ret:size() do
+		for i = ret:size(), 1, -1 do
 			local curr = ret:index(i)
 			if Board:IsPod(curr) then
 				weaponPreview:AddColor(curr, color_invalid)
 				ret:erase(i)
-			end
-			if Board:GetTerrain(curr) == TERRAIN_WATER then
+			elseif Board:GetTerrain(curr) == TERRAIN_WATER then
 				if
 					Pawn:GetPathProf() % 16 == PATH_JUMPS   or
 					Pawn:GetPathProf() % 16 == PATH_BURROWS
