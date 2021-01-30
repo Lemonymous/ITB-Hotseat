@@ -12,6 +12,19 @@ local this = {}
 
 -- combatibility code not done.
 remove_element("Mission_SpiderBoss", Corp_Default.Bosses)
+--	__________
+--	 Missions
+--	‾‾‾‾‾‾‾‾‾‾
+
+
+--	_______
+--	 Units
+--	‾‾‾‾‾‾‾
+
+
+--	___________
+--	 Portraits
+--	‾‾‾‾‾‾‾‾‾‾‾
 
 utils.appendAssets{
 	writePath = "img/",
@@ -23,10 +36,6 @@ utils.appendAssets{
 	{"portraits/enemy/Webegg1.png", "portraits/Webegg.png"},
 	{"portraits/enemy/WebeggBoss.png", "portraits/Webegg.png"},
 }
-
---	___________
---	 Portraits
---	‾‾‾‾‾‾‾‾‾‾‾
 
 WebbEgg1.Portrait = "enemy/Webegg1"
 WebbEgg1.IsPortrait = true
@@ -80,61 +89,6 @@ Scorpion_Acid.Portrait = "enemy/AcidScorpion1"
 --	_________
 --	 Weapons
 --	‾‾‾‾‾‾‾‾‾
-
-utils.appendAssets{
-	writePath = "img/",
-	readPath = resourcePath .."img/",
-	{"weapons/SpiderlingAtk1.png", "weapons/SpiderlingAtk1.png"},
-	{"weapons/SpiderlingAtk2.png", "weapons/SpiderlingAtk2.png"},
-	{"weapons/BurrowerAtk1.png", "weapons/BurrowerAtk1.png"},
-	{"weapons/BurrowerAtk2.png", "weapons/BurrowerAtk2.png"},
-	{"weapons/BurrowerAtkBoss.png", "weapons/BurrowerAtkBoss.png"},
-	{"weapons/FireflyAtkBoss.png", "weapons/FireflyAtkBoss.png"},
-	{"weapons/ScorpionAtkBoss.png", "weapons/ScorpionAtkBoss.png"},
-	{"weapons/HornetAtkBoss.png", "weapons/HornetAtkBoss.png"},
-	{"weapons/ScarabAtkBoss.png", "weapons/ScarabAtkBoss.png"},
-	{"weapons/CrabAtkBoss.png", "weapons/CrabAtkBoss.png"},
-	{"weapons/BlobberAtkBoss.png", "weapons/BlobberAtkBoss.png"},
-	{"weapons/BlobAtkBoss.png", "weapons/BlobAtkBoss.png"},
-	{"weapons/lmn_WebeggAtk1.png", "weapons/WebeggAtk1.png"},
-	
-	{"weapons/lmn_SnowLaser1.png", "weapons/snowlaser1.png"},
-	{"weapons/lmn_SnowLaser2.png", "weapons/snowlaser2.png"},
-	{"weapons/lmn_SnowTank1.png", "weapons/snowtank1.png"},
-	{"weapons/lmn_SnowTank2.png", "weapons/snowtank2.png"},
-	{"weapons/lmn_SnowArt1.png", "weapons/snowart1.png"},
-	{"weapons/lmn_SnowArt2.png", "weapons/snowart2.png"},
-	
-	{"weapons/lmn_BlobBoss.png", "weapons/blobboss.png"},
-	{"weapons/lmn_SnowBossShield.png", "weapons/snowbossshield.png"},
-}
-
-SpiderAtk1.Icon = "weapons/enemy_spider2.png"
-SpiderAtk2.Icon = "weapons/enemy_spider2.png"
-SpiderlingAtk1.Icon = "weapons/SpiderlingAtk1.png"
-SpiderlingAtk2.Icon = "weapons/SpiderlingAtk2.png"
-BeetleAtk1.Icon = "weapons/vek_beetle.png"
-BeetleAtk2.Icon = "weapons/vek_beetle.png"
-WebeggHatch1.Icon = "weapons/lmn_WebeggAtk1.png"
-SpiderlingHatch1.Icon = "weapons/lmn_WebeggAtk1.png"
-DiggerAtk1.Icon = "weapons/enemy_rocker1.png"
-DiggerAtk2.Icon = "weapons/enemy_rocker2.png"
-LeaperAtk2.Icon = "weapons/enemy_leaper2.png"
-FireflyAtkB.Icon = "weapons/FireflyAtkBoss.png"
-HornetAtkB.Icon = "weapons/HornetAtkBoss.png"
-ScorpionAtkB.Icon = "weapons/ScorpionAtkBoss.png"
-Burrower_Atk.Icon = "weapons/BurrowerAtk1.png"
-Burrower_Atk2.Icon = "weapons/BurrowerAtk2.png"
-SnowlaserAtk1.Icon = "weapons/lmn_SnowLaser1.png"
-SnowlaserAtk2.Icon = "weapons/lmn_SnowLaser2.png"
-SnowtankAtk1.Icon = "weapons/lmn_SnowTank1.png"
-SnowtankAtk2.Icon = "weapons/lmn_SnowTank2.png"
-SnowartAtk1.Icon = "weapons/lmn_SnowArt1.png"
-SnowartAtk2.Icon = "weapons/lmn_SnowArt2.png"
-BlobBossAtk.Icon = "weapons/lmn_BlobBoss.png"
-SnowBossAtk.Icon = "weapons/lmn_SnowArt1.png"
-BossHeal.Icon = "weapons/lmn_SnowBossShield.png"
-
 
 local old = ScorpionAtk1.GetSkillEffect
 function ScorpionAtk1:GetSkillEffect(p1, p2, ...)
@@ -231,6 +185,66 @@ function BlobberAtk1:GetSkillEffect(p1, p2)
 	ret:AddScript(string.format("Board:GetPawn(%s):SetActive(false)", p2:GetString()))
 	return ret
 end
+
+
+
+utils.appendAssets{
+	writePath = "img/",
+	readPath = resourcePath .."img/",
+	{"weapons/SpiderlingAtk1.png", "weapons/SpiderlingAtk1.png"},
+	{"weapons/SpiderlingAtk2.png", "weapons/SpiderlingAtk2.png"},
+	{"weapons/BurrowerAtk1.png", "weapons/BurrowerAtk1.png"},
+	{"weapons/BurrowerAtk2.png", "weapons/BurrowerAtk2.png"},
+	{"weapons/BurrowerAtkBoss.png", "weapons/BurrowerAtkBoss.png"},
+	{"weapons/FireflyAtkBoss.png", "weapons/FireflyAtkBoss.png"},
+	{"weapons/ScorpionAtkBoss.png", "weapons/ScorpionAtkBoss.png"},
+	{"weapons/HornetAtkBoss.png", "weapons/HornetAtkBoss.png"},
+	{"weapons/ScarabAtkBoss.png", "weapons/ScarabAtkBoss.png"},
+	{"weapons/CrabAtkBoss.png", "weapons/CrabAtkBoss.png"},
+	{"weapons/BlobberAtkBoss.png", "weapons/BlobberAtkBoss.png"},
+	{"weapons/BlobAtkBoss.png", "weapons/BlobAtkBoss.png"},
+	{"weapons/lmn_WebeggAtk1.png", "weapons/WebeggAtk1.png"},
+	
+	{"weapons/lmn_SnowLaser1.png", "weapons/snowlaser1.png"},
+	{"weapons/lmn_SnowLaser2.png", "weapons/snowlaser2.png"},
+	{"weapons/lmn_SnowTank1.png", "weapons/snowtank1.png"},
+	{"weapons/lmn_SnowTank2.png", "weapons/snowtank2.png"},
+	{"weapons/lmn_SnowArt1.png", "weapons/snowart1.png"},
+	{"weapons/lmn_SnowArt2.png", "weapons/snowart2.png"},
+	
+	{"weapons/lmn_BlobBoss.png", "weapons/blobboss.png"},
+	{"weapons/lmn_SnowBossShield.png", "weapons/snowbossshield.png"},
+}
+
+SpiderAtk1.Icon = "weapons/enemy_spider2.png"
+SpiderAtk2.Icon = "weapons/enemy_spider2.png"
+SpiderlingAtk1.Icon = "weapons/SpiderlingAtk1.png"
+SpiderlingAtk2.Icon = "weapons/SpiderlingAtk2.png"
+BeetleAtk1.Icon = "weapons/vek_beetle.png"
+BeetleAtk2.Icon = "weapons/vek_beetle.png"
+WebeggHatch1.Icon = "weapons/lmn_WebeggAtk1.png"
+SpiderlingHatch1.Icon = "weapons/lmn_WebeggAtk1.png"
+DiggerAtk1.Icon = "weapons/enemy_rocker1.png"
+DiggerAtk2.Icon = "weapons/enemy_rocker2.png"
+LeaperAtk2.Icon = "weapons/enemy_leaper2.png"
+FireflyAtkB.Icon = "weapons/FireflyAtkBoss.png"
+HornetAtkB.Icon = "weapons/HornetAtkBoss.png"
+ScorpionAtkB.Icon = "weapons/ScorpionAtkBoss.png"
+Burrower_Atk.Icon = "weapons/BurrowerAtk1.png"
+Burrower_Atk2.Icon = "weapons/BurrowerAtk2.png"
+SnowlaserAtk1.Icon = "weapons/lmn_SnowLaser1.png"
+SnowlaserAtk2.Icon = "weapons/lmn_SnowLaser2.png"
+SnowtankAtk1.Icon = "weapons/lmn_SnowTank1.png"
+SnowtankAtk2.Icon = "weapons/lmn_SnowTank2.png"
+SnowartAtk1.Icon = "weapons/lmn_SnowArt1.png"
+SnowartAtk2.Icon = "weapons/lmn_SnowArt2.png"
+BlobBossAtk.Icon = "weapons/lmn_BlobBoss.png"
+SnowBossAtk.Icon = "weapons/lmn_SnowArt1.png"
+BossHeal.Icon = "weapons/lmn_SnowBossShield.png"
+
+--	____________
+--	 Additional
+--	‾‾‾‾‾‾‾‾‾‾‾‾
 
 local function isBurrower(pawn)
 	return _G[pawn:GetType()].Burrows
