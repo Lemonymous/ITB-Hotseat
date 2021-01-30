@@ -10,17 +10,18 @@ local phases = require(path .."phases")
 local color_invalid = GL_Color(255,150,150)
 local this = {}
 
--- combatibility code not done.
-remove_element("Mission_SpiderBoss", Corp_Default.Bosses)
 --	__________
 --	 Missions
 --	‾‾‾‾‾‾‾‾‾‾
 
+Mission_SpiderBoss.UpdateSpawning = Mission.UpdateSpawning
 
 --	_______
 --	 Units
 --	‾‾‾‾‾‾‾
 
+SpiderBoss.Tooltip = ""
+SpiderBoss.SkillList = { "SpiderAtkB" }
 
 --	___________
 --	 Portraits
@@ -218,6 +219,7 @@ utils.appendAssets{
 
 SpiderAtk1.Icon = "weapons/enemy_spider2.png"
 SpiderAtk2.Icon = "weapons/enemy_spider2.png"
+SpiderAtkB.Icon = "weapons/enemy_spider2.png"
 SpiderlingAtk1.Icon = "weapons/SpiderlingAtk1.png"
 SpiderlingAtk2.Icon = "weapons/SpiderlingAtk2.png"
 BeetleAtk1.Icon = "weapons/vek_beetle.png"

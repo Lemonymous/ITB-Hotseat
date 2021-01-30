@@ -50,6 +50,7 @@ local components = {
 	"timeAttack",
 	"resetTurn",
 	"rewardRebalance",
+	"compatibility/SpiderAtkB",
 	"compatibility/vanilla_units",
 	"compatibility/vanilla_missions",
 	"compatibility/into_the_wild",
