@@ -16,6 +16,36 @@ local this = {}
 
 Mission_SpiderBoss.UpdateSpawning = Mission.UpdateSpawning
 
+function Mission_SpiderBoss:StartMission()
+	self:StartBoss()
+	self:GetSpawner():BlockPawns("Blobber")
+	self:GetSpawner():BlockPawns("Spider")
+	
+	local eggs = {}
+	for i = 1,2 do
+		eggs[i] = PAWN_FACTORY:CreatePawn("SpiderlingEgg1")
+		Board:AddPawn(eggs[i])
+	end
+	
+	for i = 1,2 do
+		local p = eggs[i]:GetSpace()
+		local fx = SpiderlingHatch1:GetSkillEffect(p, p)
+		fx.effect = fx.q_effect
+		fx.q_effect = SkillEffect().q_effect
+		Board:AddEffect(fx)
+	end
+end
+
+local old_SpiderlingHatch1_GetSkillEffect = SpiderlingHatch1.GetSkillEffect
+function SpiderlingHatch1:GetSkillEffect(p1, p2, parentSkill, ...)
+	local ret = old_SpiderlingHatch1_GetSkillEffect(self, p1, p2, SpiderlingHatch1, ...)
+	
+	ret.q_effect = ret.effect
+	ret.effect = SkillEffect().effect
+	
+	return ret
+end
+
 --	_______
 --	 Units
 --	‾‾‾‾‾‾‾

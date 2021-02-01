@@ -121,6 +121,20 @@ function SpiderAtkB:GetSkillEffect(p1, p2)
 		ret:AddArtillery(p1, damage, "effects/shotup_spider.png", FULL_DELAY)
 	end
 	
+	ret:AddDelay(0.1)
+	
+	-- queue eggs to hatch into spiders
+	for i = #targets, 1, -1 do
+		local p = targets[i]
+		ret:AddScript(string.format([[
+			local p = %s;
+			local pawn = Board:GetPawn(p);
+			if pawn then
+				pawn:FireWeapon(p, 1);
+			end
+		]], p:GetString()))
+	end
+	
 	return ret
 end
 
