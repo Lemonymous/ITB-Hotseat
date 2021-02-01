@@ -1,11 +1,11 @@
 
 ---------------------------------------------------------------------
--- Selected v1.2* - code library
+-- Selected v1.3 - code library
 --[[-----------------------------------------------------------------
-	modified for Weapon Preview library
+	needs to be loaded to function.
 ]]
 local path = mod_loader.mods[modApi.currentMod].scriptPath
-local getModUtils = require(path .."weaponPreview/lib/getModUtils")
+local modUtils = require(path .."modApiExt/modApiExt")
 local this = {}
 
 sdlext.addGameExitedHook(function()
@@ -17,8 +17,6 @@ function this:Get()
 end
 
 function this:load()
-	local modUtils = getModUtils()
-	
 	modUtils:addPawnSelectedHook(function(_, pawn)
 		self.selected = pawn
 	end)
