@@ -33,9 +33,11 @@ function this:new(...)
 	UiPawn.new(self, ...)
 	self.drawBelowChildren = true
 	self.offset = Point(0,18)
+	self.traslucent = true
 	
 	local uiArrow = Ui2()
 		:decorate{ DecoSurface() }
+		:setTranslucent()
 		:addTo(self)
 	
 	function self:update(screen)

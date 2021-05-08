@@ -154,6 +154,7 @@ local function Deploy(loc)
 		:addTo(uiArea)
 	ui.tile = loc
 	ui.outline = colors.outline_valid
+	ui.translucent = true
 	
 	table.sort(uiArea.children, function(a,b)
 		if a.tile and not b.tile then
@@ -231,6 +232,7 @@ local function createUi()
 	uiMain.translucent = true
 	uiDeployBox.translucent = true
 	uiRemaining.translucent = true
+	uiArea.translucent = true
 	
 	uiMain:addTo(uiRoot)
 	uiDeployBox:addTo(uiMain)
@@ -268,6 +270,8 @@ local function createUi()
 				
 				Game:TriggerSound("ui/battle/end_turn_notification")
 			end
+			
+			return true
 		end
 		
 		return Ui2.mousedown(self, x, y, button)
