@@ -343,7 +343,7 @@ local function createVekUi()
 		return false
 	end
 	
-	function uiButton:onUpdate(screen)
+	function uiButton:updateState(screen)
 		if self.hovered then
 			showVekOrderOverlay()
 		else
