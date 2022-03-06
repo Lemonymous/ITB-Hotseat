@@ -28,7 +28,7 @@ function mod:metadata()
 end
 
 local components = {
-	"modApiExt/modApiExt",
+	"ITB-ModUtils/modApiExt/modApiExt",
 	"LApi/LApi",
 	"libs/hotkey",
 	"libs/bonusMission",
