@@ -27,4 +27,21 @@ phases.addMechTurnStartHook(function()
 	end
 end)
 
+local old_IsBomb = IsBomb
+function IsBomb(point)
+	if point == nil then
+		local pawns = extract_table(Board:GetPawns(TEAM_ANY))
+	
+		for _, pawnId in ipairs(pawns) do
+			local pawn = Board:GetPawn(pawnId)
+			if pawn:GetType() == "BigBomb" then
+				point = pawn:GetSpace()
+				break
+			end
+		end
+	end
+
+	return old_IsBomb(point)
+end
+
 return this
