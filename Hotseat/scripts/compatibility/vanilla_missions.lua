@@ -29,19 +29,13 @@ end)
 
 local old_IsBomb = IsBomb
 function IsBomb(point)
-	if point == nil then
-		local pawns = extract_table(Board:GetPawns(TEAM_ANY))
-	
-		for _, pawnId in ipairs(pawns) do
-			local pawn = Board:GetPawn(pawnId)
-			if pawn:GetType() == "BigBomb" then
-				point = pawn:GetSpace()
-				break
-			end
-		end
-	end
+	local old_TEAM_PLAYER = TEAM_PLAYER
 
-	return old_IsBomb(point)
+	TEAM_PLAYER = TEAM_ANY
+	local result = old_IsBomb(player)
+	TEAM_PLAYER = old_TEAM_PLAYER
+
+	return result
 end
 
 return this
