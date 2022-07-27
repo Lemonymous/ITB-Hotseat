@@ -5,7 +5,7 @@
 	needs to be loaded to function.
 ]]
 local path = mod_loader.mods[modApi.currentMod].scriptPath
-local modUtils = require(path .."modApiExt/modApiExt")
+local modUtils = require(path .."ITB-ModUtils/modApiExt/modApiExt")
 local this = {}
 
 sdlext.addGameExitedHook(function()

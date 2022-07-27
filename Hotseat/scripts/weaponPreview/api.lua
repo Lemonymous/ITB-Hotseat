@@ -172,7 +172,7 @@
 
 local mod = mod_loader.mods[modApi.currentMod]
 local path = mod.scriptPath
-local modUtils = require(path .."modApiExt/modApiExt")
+local modUtils = require(path .."ITB-ModUtils/modApiExt/modApiExt")
 local isTipImage = require(path .."weaponPreview/lib/isTipImage")
 local selected = require(path .."weaponPreview/lib/selected")
 local highlighted = require(path .."weaponPreview/lib/highlighted")

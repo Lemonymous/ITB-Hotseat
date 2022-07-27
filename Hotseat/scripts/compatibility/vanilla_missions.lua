@@ -27,4 +27,15 @@ phases.addMechTurnStartHook(function()
 	end
 end)
 
+local old_IsBomb = IsBomb
+function IsBomb(point)
+	local old_TEAM_PLAYER = TEAM_PLAYER
+
+	TEAM_PLAYER = TEAM_ANY
+	local result = old_IsBomb(player)
+	TEAM_PLAYER = old_TEAM_PLAYER
+
+	return result
+end
+
 return this

@@ -4,13 +4,13 @@
 local this = {}
 
 function this:pawn(pawn)
-	if pawn:IsMech() then return end -- prevent mechs from running this code.
+	-- if pawn:IsMech() then return end -- prevent mechs from running this code.
 	
-	local data = _G[pawn:GetType()]
-	local weapons = #data.SkillList
-	pawn:AddWeapon("lmn_Hotseat_SkillEmpty")
-	pawn:FireWeapon(pawn:GetSpace(), weapons + 1)
-	Pawn:RemoveWeapon(weapons + 1)
+	-- local data = _G[pawn:GetType()]
+	-- local weapons = #data.SkillList
+	-- pawn:AddWeapon("lmn_Hotseat_SkillEmpty")
+	-- pawn:FireWeapon(pawn:GetSpace(), weapons + 1)
+	-- Pawn:RemoveWeapon(weapons + 1)
 end
 
 lmn_Hotseat_SkillEmpty = Skill:new{LaunchSound = ""}

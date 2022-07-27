@@ -1,0 +1,6 @@
+[submodule "Hotseat/scripts/LApi"]
+	path = Hotseat/scripts/LApi
+	url = git@github.com:Lemonymous/ITB-LApi.git
+[submodule "Hotseat/scripts/ITB-ModUtils"]
+	path = Hotseat/scripts/ITB-ModUtils
+	url = git@github.com:kartoFlane/ITB-ModUtils.git
