@@ -10,9 +10,9 @@ end
 --LOG("Hotseat: ".. id .." found. Running compatibility code.")
 LOG("Hotseat: ".. id .." found. Compatibility code incomplete. Removing incompatible enemies from pool.")
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
 local getModUtils = require(path .."libs/getModUtils")
 local weaponPreview = require(path .."weaponPreview/api")
+local path = modApi:getCurrentMod().scriptPath
 local utils = require(path .."libs/utils")
 local this = {}
 

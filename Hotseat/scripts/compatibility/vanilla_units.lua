@@ -1,7 +1,7 @@
 
 -- adjusting a few vanilla mechanics to be more suitable for player controlled use.
 
-local resourcePath = mod_loader.mods[modApi.currentMod].resourcePath
+local resourcePath = modApi:getCurrentMod().resourcePath
 local path = resourcePath .."scripts/"
 local weaponPreview = require(path .."weaponPreview/api")
 local getModUtils = require(path .."libs/getModUtils")
