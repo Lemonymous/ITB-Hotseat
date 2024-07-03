@@ -1,8 +1,6 @@
 
 local path = modApi:getCurrentMod().scriptPath
 local tileToScreen = require(path .."libs/tileToScreen")
-local stringize = require(path .."libs/stringize")
-local cache = require(path .."libs/cacheSurface")
 local Ui2 = require(path .."ui/Ui2")
 local this = Class.inherit(Ui2)
 
@@ -54,7 +52,7 @@ function this:new(type)
 			path = "img/".. ANIMS[_G[widget._type].Image].Image
 		end
 		
-		self.surface = cache.getSurface{
+		self.surface = sdlext.getSurface{
 			path = path,
 			scale = widget._scale or 2,
 			outline = { border = widget._scale or 2, color = widget._outline or deco.colors.buttonborder }

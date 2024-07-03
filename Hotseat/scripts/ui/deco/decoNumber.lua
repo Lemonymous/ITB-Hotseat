@@ -1,6 +1,4 @@
 
-local cache = require(mod.scriptPath .."libs/cacheSurface")
-local stringize = require(mod.scriptPath .."libs/stringize")
 local mod = modApi:getCurrentMod()
 local path = "img/combat/icons/damage_"
 
@@ -19,7 +17,7 @@ function this:new(number, scale, color)
 		local path = path .. number ..".png"
 		local colormap = color and {sdl.rgb(255,255,255), color}
 		
-		surface = cache.getSurface{
+		surface = sdlext.getSurface{
 			path = path,
 			scale = scale,
 			colormap = colormap

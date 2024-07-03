@@ -1,7 +1,6 @@
 
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
-local cache = require(path .."libs/cacheSurface")
 local this = {}
 
 local function setAdjust(self, adjust)
@@ -43,7 +42,7 @@ for i, name in ipairs{"Horizontal", "Vertical"} do
 	end
 	
 	this[name].setsurface = function(self, path, icon, outline, colormap)
-		self.surface = cache.getSurface{
+		self.surface = sdlext.getSurface{
 			path = path,
 			icon = icon,
 			outline = outline,

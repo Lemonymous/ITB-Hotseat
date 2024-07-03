@@ -1,8 +1,6 @@
 
 local path = modApi:getCurrentMod().scriptPath
 local tileToScreen = require(path .."libs/tileToScreen")
-local stringize = require(path .."libs/stringize")
-local cache = require(path .."libs/cacheSurface")
 local UiPawn = require(path .."ui/pawn")
 local Ui2 = require(path .."ui/Ui2")
 local this = Class.inherit(UiPawn)
@@ -54,7 +52,7 @@ function this:new(...)
 		local colormap = color and {sdl.rgb(255,255,255), color}
 		local tileCode = widget.parent._tileCode or 4
 		
-		self.surface = cache.getSurface{
+		self.surface = sdlext.getSurface{
 			path = paths[tileCode],
 			scale = scale,
 			colormap = colormap

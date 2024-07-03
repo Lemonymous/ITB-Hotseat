@@ -1,7 +1,6 @@
 
 local path = modApi:getCurrentMod().resourcePath
 local scripts = path .."scripts/"
-local cache = require(scripts .."libs/cacheSurface")
 local menu = require(scripts .."libs/menu")
 local clip = require(scripts .."libs/clip")
 local Ui2 = require(scripts .."ui/Ui2")
@@ -16,7 +15,7 @@ function this:new(loc, icon, scale)
 	Ui2.new(self)
 	self.translucent = true
 	
-	local surface = cache.getSurface{
+	local surface = sdlext.getSurface{
 		path = icon,
 		scale = scale
 	}
