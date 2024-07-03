@@ -10,8 +10,8 @@ end
 LOG("Hotseat: ".. id .." found. Running compatibility code.")
 
 local getModUtils = require(path .."libs/getModUtils")
-local weaponPreview = require(path .."weaponPreview/api")
 local path = modApi:getCurrentMod().scriptPath
+local weaponPreview = require(path .."weaponPreview")
 local utils = require(path .."libs/utils")
 
 RockBeetleAtk1.Portrait = "enemy/Beetle1"

@@ -3,8 +3,8 @@
 
 local resourcePath = modApi:getCurrentMod().resourcePath
 local path = resourcePath .."scripts/"
-local weaponPreview = require(path .."weaponPreview/api")
 local getModUtils = require(path .."libs/getModUtils")
+local weaponPreview = require(path .."weaponPreview")
 local utils = require(path .."libs/utils")
 local phases = require(path .."phases")
 local color_invalid = GL_Color(255,150,150)

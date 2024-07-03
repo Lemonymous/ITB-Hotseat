@@ -46,7 +46,7 @@ local components = {
 	"phases/playerturn",
 	"phases/transition",
 	"suppressEnemyTurn",
-	"weaponPreview/api",
+	"weaponPreview",
 	"timeAttack",
 	"resetTurn",
 	"rewardRebalance",
