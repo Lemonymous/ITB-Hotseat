@@ -100,12 +100,12 @@ end
 
 function this:load()
 	local modUtils = getModUtils()
-	local options = mod_loader.currentModContent[mod.id].options
 	
 	mechTime = options["option_hotseat_timeattack_mech"].value
 	vekTime = options["option_hotseat_timeattack_vek"].value
 	mechTime = type(mechTime) == 'number' and mechTime or nil
 	vekTime = type(vekTime) == 'number' and vekTime or nil
+local options = modApi:getModOptions(mod.id)
 	
 	modUtils:addResetTurnHook(restore)
 	modUtils:addGameLoadedHook(restore)

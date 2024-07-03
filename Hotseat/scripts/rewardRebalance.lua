@@ -6,7 +6,7 @@ local bonusStore = require(path .."libs/bonusStore")
 local this = {}
 
 function this:load()
-	local options = mod_loader.currentModContent[mod.id].options
+	local options = modApi:getModOptions(mod.id)
 	
 	bonusMission.reset()
 	bonusStore.reset()
