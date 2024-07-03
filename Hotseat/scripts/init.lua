@@ -37,7 +37,6 @@ local components = {
 	"libs/missionExt",
 	"libs/teamTurn",
 	"libs/moveUtils",
-	"libs/selected",
 	"libs/highlighted",
 	"libs/scheduledMissionHook",
 	"libs/menu",
