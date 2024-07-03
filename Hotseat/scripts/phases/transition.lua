@@ -1,7 +1,6 @@
 
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
-local getModUtils = require(path .."libs/getModUtils")
 local phases = require(path .."phases")
 local menu = require(path .."libs/menu")
 local suspendLoop = require(path .."libs/suspendLoop")
@@ -101,21 +100,17 @@ phases.addTransitVekStartHook(startTransitVek)
 phases.addTransitMechStartHook(startTransitMech)
 phases.addTransitVekEndHook(destroyUi)
 phases.addTransitMechEndHook(destroyUi)
-sdlext.addGameExitedHook(destroyUi)
+modApi.events.onGameExited:subscribe(destroyUi)
 
-function this:load()
-	local modUtils = getModUtils()
-	
-	local function restore()
-		if phases.isPhase("transitVek") then
-			modApi:runLater(startTransitVek)
-		elseif phases.isPhase("transitMech") then
-			modApi:runLater(startTransitMech)
-		end
+local function restore()
+	if phases.isPhase("transitVek") then
+		modApi:runLater(startTransitVek)
+	elseif phases.isPhase("transitMech") then
+		modApi:runLater(startTransitMech)
 	end
-	
-	modUtils:addResetTurnHook(restore)
-	modUtils:addGameLoadedHook(restore)
 end
+
+modapiext.events.onResetTurn:subscribe(restore)
+modapiext.events.onGameLoaded:subscribe(restore)
 
 return this
