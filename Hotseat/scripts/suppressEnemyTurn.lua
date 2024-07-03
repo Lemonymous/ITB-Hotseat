@@ -1,5 +1,4 @@
 
-local getModUtils = require(path .."libs/getModUtils")
 local path = modApi:getCurrentMod().scriptPath
 local phases = require(path .."phases")
 local this = {}
@@ -89,14 +88,10 @@ phases.addAiStartHook(function()
 	suppressPawns(GetCurrentMission(), true)
 end)
 
-function this:load()
-	local modUtils = getModUtils()
-	
-	modUtils:addPawnTrackedHook(function(self, pawn)
-		if phases.isPhase("ai") then
-			this.suppressPawn(self, pawn)
-		end
-	end)
-end
+modapiext.events.onPawnTracked:subscribe(function(self, pawn)
+	if phases.isPhase("ai") then
+		this.suppressPawn(self, pawn)
+	end
+end)
 
 return this

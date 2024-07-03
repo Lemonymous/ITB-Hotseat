@@ -1,5 +1,4 @@
 
-local getModUtils = require(path .."libs/getModUtils")
 local path = modApi:getCurrentMod().scriptPath
 local hotkey = require(path .."libs/hotkey")
 local this = {}
@@ -24,12 +23,9 @@ sdlext.addGameExitedHook(function()
 	unsuppress()
 end)
 
-function this:load()
-	local modUtils = getModUtils()
-	modApi:addMissionStartHook(suppress)
-	modApi:addMissionNextPhaseCreatedHook(suppress)
-	modApi:addMissionEndHook(unsuppress)
-	modUtils:addGameLoadedHook(suppress)
-end
+modApi.events.onMissionStart:subscribe(suppress)
+modApi.events.onMissionNextPhaseCreated:subscribe(suppress)
+modApi.events.onMissionEnd:subscribe(unsuppress)
+modapiext.events.onGameLoaded:subscribe(suppress)
 
 return this

@@ -1,7 +1,6 @@
 
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
-local getModUtils = require(path .."libs/getModUtils")
 local deselect = require(path .."libs/deselect")
 local isNeutral = require(path .."libs/isNeutral")
 local menu = require(path .."libs/menu")
@@ -13,7 +12,7 @@ local this = {}
 local mechTime, vekTime
 local uiHolder, uiTimer
 
-sdlext.addUiRootCreatedHook(function(screen, uiRoot)
+modApi.events.onUiRootCreated:subscribe(function(screen, uiRoot)
 	uiHolder = Ui2():width(1):height(1):addTo(uiRoot)
 	uiHolder.translucent = true
 end)
@@ -68,7 +67,7 @@ end)
 
 phases.addVekTurnEndHook(destroyUi)
 phases.addMechTurnEndHook(destroyUi)
-sdlext.addGameExitedHook(destroyUi)
+modApi.events.onGameExited:subscribe(destroyUi)
 
 phases.addVekTurnStartHook(function()
 	local m = GetCurrentMission()
@@ -97,34 +96,31 @@ local function restore()
 	end
 end
 
-function this:load()
-	local modUtils = getModUtils()
-	
-	mechTime = options["option_hotseat_timeattack_mech"].value
-	vekTime = options["option_hotseat_timeattack_vek"].value
-	mechTime = type(mechTime) == 'number' and mechTime or nil
-	vekTime = type(vekTime) == 'number' and vekTime or nil
 local options = modApi:getModOptions(mod.id)
+
+mechTime = options["option_hotseat_timeattack_mech"].value
+vekTime = options["option_hotseat_timeattack_vek"].value
+mechTime = type(mechTime) == 'number' and mechTime or nil
+vekTime = type(vekTime) == 'number' and vekTime or nil
+
+modapiext.events.onResetTurn:subscribe(restore)
+modapiext.events.onGameLoaded:subscribe(restore)
+
+modApi.events.onMissionStart:subscribe(destroyUi)
+modApi.events.onMissionNextPhaseCreated:subscribe(destroyUi)
+modApi.events.onMissionEnd:subscribe(destroyUi)
+modApi.events.onMissionUpdate:subscribe(function(m)
+	if not uiTimer or menu.isOpen() then return end
+	if Board:IsBusy() then return end
 	
-	modUtils:addResetTurnHook(restore)
-	modUtils:addGameLoadedHook(restore)
+	m.lmn_hotseat = m.lmn_hotseat or {}
+	m.lmn_hotseat.timer = m.lmn_hotseat.timer or 0
+	m.lmn_hotseat.timer = math.max(0, m.lmn_hotseat.timer - 1)
 	
-	modApi:addMissionStartHook(destroyUi)
-	modApi:addMissionNextPhaseCreatedHook(destroyUi)
-	modApi:addMissionEndHook(destroyUi)
-	modApi:addMissionUpdateHook(function(m)
-		if not uiTimer or menu.isOpen() then return end
-		if Board:IsBusy() then return end
-		
-		m.lmn_hotseat = m.lmn_hotseat or {}
-		m.lmn_hotseat.timer = m.lmn_hotseat.timer or 0
-		m.lmn_hotseat.timer = math.max(0, m.lmn_hotseat.timer - 1)
-		
-		if not uiTimer.ended and m.lmn_hotseat.timer == 0 then
-			uiTimer.ended = true
-			hooks:fireTimerEndedHooks()
-		end
-	end)
-end
+	if not uiTimer.ended and m.lmn_hotseat.timer == 0 then
+		uiTimer.ended = true
+		hooks:fireTimerEndedHooks()
+	end
+end)
 
 return this
