@@ -98,7 +98,7 @@ local function AddObjective(...)
 end
 
 -- temporary solution in an attempt to increase all power rewards.
-sdlext.addFrameDrawnHook(function()
+modApi.events.onFrameDrawn:subscribe(function()
 	if Game and Game.AddObjective ~= AddObjective then
 		oldAddObjective = Game.AddObjective
 		Game.AddObjective = AddObjective

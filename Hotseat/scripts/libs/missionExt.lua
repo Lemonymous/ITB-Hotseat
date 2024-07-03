@@ -1,7 +1,6 @@
 
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
-local getModUtils = require(path .."libs/getModUtils")
 local id = mod.id
 local this = {}
 
@@ -19,17 +18,13 @@ function this:hasEnded(m)
 	return not m or m[id].hasEnded
 end
 
-function this:load()
-	modUtils = getModUtils()
-	
-	modApi:addMissionStartHook(init)
-	modApi:addMissionNextPhaseCreatedHook(function(_, m) init(m) end)
-	modUtils:addResetTurnHook(function() modApi:runLater(init) end)
-	modUtils:addGameLoadedHook(function() modApi:runLater(init) end)
-	
-	modApi:addMissionEndHook(function(m)
-		m[id].hasEnded = true
-	end)
-end
+modApi.events.onMissionStart:subscribe(init)
+modApi.events.onMissionNextPhaseCreated:subscribe(function(_, m) init(m) end)
+modapiext.events.onResetTurn:subscribe(function() modApi:runLater(init) end)
+modapiext.events.onGameLoaded:subscribe(function() modApi:runLater(init) end)
+
+modApi.events.onMissionEnd:subscribe(function(m)
+	m[id].hasEnded = true
+end)
 
 return this

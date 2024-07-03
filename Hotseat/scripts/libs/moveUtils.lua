@@ -9,7 +9,6 @@
 
 local path = modApi:getCurrentMod().scriptPath
 local teamTurn = require(path .."libs/teamTurn")
-local getModUtils = require(path .."libs/getModUtils")
 local this = {}
 
 -- returns true if pawn is being moved.
@@ -31,30 +30,26 @@ function this:HasMoved(pawn)
 	return mission.lmn_hasMoved[pawn:GetId()] == Game:GetTurnCount()
 end
 
-function this:load()
-	local modUtils = getModUtils()
+modapiext.events.onPawnMoveStart:subscribe(function(mission, pawn)
+	mission.lmn_hasMoved = mission.lmn_hasMoved or {}
+	mission.lmn_hasMoved[pawn:GetId()] = Game:GetTurnCount()
+end)
+
+modapiext.events.onPawnUndoMove:subscribe(function(mission, pawn)
+	mission.lmn_hasMoved = mission.lmn_hasMoved or {}
+	mission.lmn_hasMoved[pawn:GetId()] = nil
+end)
+
+modapiext.events.onPawnSelected:subscribe(function(mission, pawn)
+	if not teamTurn.IsPlayerTurn() or this:HasMoved(pawn) then return end
 	
-	modUtils:addPawnMoveStartHook(function(mission, pawn)
-		mission.lmn_hasMoved = mission.lmn_hasMoved or {}
-		mission.lmn_hasMoved[pawn:GetId()] = Game:GetTurnCount()
-	end)
+	this.activePawn = pawn
+end)
+
+modapiext.events.onPawnDeselected:subscribe(function(mission, pawn)
+	if not teamTurn.IsPlayerTurn() or this:HasMoved(pawn) then return end
 	
-	modUtils:addPawnUndoMoveHook(function(mission, pawn)
-		mission.lmn_hasMoved = mission.lmn_hasMoved or {}
-		mission.lmn_hasMoved[pawn:GetId()] = nil
-	end)
-	
-	modUtils:addPawnSelectedHook(function(mission, pawn)
-		if not teamTurn.IsPlayerTurn() or self:HasMoved(pawn) then return end
-		
-		self.activePawn = pawn
-	end)
-	
-	modUtils:addPawnDeselectedHook(function(mission, pawn)
-		if not teamTurn.IsPlayerTurn() or self:HasMoved(pawn) then return end
-		
-		self.activePawn = nil
-	end)
-end
+	this.activePawn = nil
+end)
 
 return this

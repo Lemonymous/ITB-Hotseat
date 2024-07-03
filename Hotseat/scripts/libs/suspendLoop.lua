@@ -58,7 +58,7 @@ function this.effect(i)
 	return ret
 end
 
-sdlext.addGameExitedHook(function()
+modApi.events.onGameExited:subscribe(function()
 	this.funcs = {}
 end)
 

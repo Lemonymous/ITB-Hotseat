@@ -195,40 +195,38 @@ for _, name in ipairs(names) do
 	end
 end
 
-function this:load()
-	modApi:addMissionStartHook(function()
-		self.setPhase("deploy")
-	end)
-	
-	modApi:addPreEnvironmentHook(function()
-		if not self.isPhase("mechMove") then
-			-- this triggers after fire phase has finished,
-			-- but is included to ensure the phase fires every turn.
-			self.setPhase("fire")
-		end
-		self.setPhase("environment")
-	end)
-	
-	modApi:addPostEnvironmentHook(function()
-		self.setPhase("resolveQueued")
-	end)
-	
-	modApi:addNextTurnHook(function()
-		if Game:GetTeamTurn() == TEAM_ENEMY then
-			self.setPhase("ai")
-		end
-	end)
-	
-	-- transitVek is handled in spawn.lua and transition.lua
-	-- spawn is handled in spawn.lua
-	-- vekTurn is handled in playerTurn.lua
-	-- transitMech is handled in playerTurn.lua and transition.lua
-	-- mechTurn is handled in playerTurn.lua
-	
-	modApi:addMissionEndHook(function()
-		self.setPhase()
-	end)
-end
+modApi.events.onMissionStart:subscribe(function()
+	this.setPhase("deploy")
+end)
+
+modApi.events.onPreEnvironment:subscribe(function()
+	if not this.isPhase("mechMove") then
+		-- this triggers after fire phase has finished,
+		-- but is included to ensure the phase fires every turn.
+		this.setPhase("fire")
+	end
+	this.setPhase("environment")
+end)
+
+modApi.events.onPostEnvironment:subscribe(function()
+	this.setPhase("resolveQueued")
+end)
+
+modApi.events.onNextTurn:subscribe(function()
+	if Game:GetTeamTurn() == TEAM_ENEMY then
+		this.setPhase("ai")
+	end
+end)
+
+-- transitVek is handled in spawn.lua and transition.lua
+-- spawn is handled in spawn.lua
+-- vekTurn is handled in playerTurn.lua
+-- transitMech is handled in playerTurn.lua and transition.lua
+-- mechTurn is handled in playerTurn.lua
+
+modApi.events.onMissionEnd:subscribe(function()
+	this.setPhase()
+end)
 
 Hotseat = {}
 setmetatable(Hotseat, this)

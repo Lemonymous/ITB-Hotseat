@@ -1,5 +1,4 @@
 
-local getModUtils = require(path .."libs/getModUtils")
 local path = modApi:getCurrentMod().scriptPath
 local this = {}
 
@@ -33,12 +32,8 @@ function Mission:ApplyEnvironmentEffect(...)
 	return ret
 end
 
-function this:load()
-	local modUtils = getModUtils()
-	
-	modUtils:addVekMoveStartHook(function(mission)
-		mission.lmn_VekMovePhase = Game:GetTurnCount()
-	end)
-end
+modapiext.events.onVekMoveStart:subscribe(function(mission)
+	mission.lmn_VekMovePhase = Game:GetTurnCount()
+end)
 
 return this

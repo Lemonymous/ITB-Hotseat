@@ -1,5 +1,4 @@
 
-local getModUtils = require(path .."libs/getModUtils")
 local path = modApi:getCurrentMod().scriptPath
 local tileToScreen = require(path .."libs/tileToScreen")
 local moveUtils = require(path .."libs/moveUtils")
@@ -363,107 +362,103 @@ phases.addMechTurnStartHook(function()
 	flashPlayerPawns(50, 255, 50)
 end)
 
-sdlext.addGameExitedHook(function()
+modApi.events.onGameExited:subscribe(function()
 	destroyVekUi()
 	destroyMechUi()
 end)
 
-function this:load()
-	local modUtils = getModUtils()
+modApi.events.onMissionStart:subscribe(function()
+	destroyVekUi()
+	destroyMechUi()
+end)
+
+modApi.events.onMissionNextPhaseCreated:subscribe(function()
+	destroyVekUi()
+	destroyMechUi()
+end)
+
+modApi.events.onMissionEnd:subscribe(function()
+	pawnTeam.resetAll()
+	destroyVekUi()
+	destroyMechUi()
+end)
+
+modApi.events.onMissionUpdate:subscribe(function()
+	if Game:GetTeamTurn() == TEAM_ENEMY then return end
+	if not uiEndTurn then return end
+	GAME.lmn_hotseat = GAME.lmn_hotseat or {}
 	
-	modApi:addMissionStartHook(function()
-		destroyVekUi()
-		destroyMechUi()
-	end)
-	
-	modApi:addMissionNextPhaseCreatedHook(function()
-		destroyVekUi()
-		destroyMechUi()
-	end)
-	
-	modApi:addMissionEndHook(function()
-		pawnTeam.resetAll()
-		destroyVekUi()
-		destroyMechUi()
-	end)
-	
-	modApi:addMissionUpdateHook(function()
-		if Game:GetTeamTurn() == TEAM_ENEMY then return end
-		if not uiEndTurn then return end
-		GAME.lmn_hotseat = GAME.lmn_hotseat or {}
+	local flash = true
+	for _, id in ipairs(extract_table(Board:GetPawns(TEAM_PLAYER))) do
+		local pawn = Board:GetPawn(id)
+		local active = pawn:IsActive() and #_G[pawn:GetType()].SkillList > 0
+		active = active or pawn:IsActive() and not moveUtils:HasMoved(pawn)
 		
-		local flash = true
-		for _, id in ipairs(extract_table(Board:GetPawns(TEAM_PLAYER))) do
-			local pawn = Board:GetPawn(id)
-			local active = pawn:IsActive() and #_G[pawn:GetType()].SkillList > 0
-			active = active or pawn:IsActive() and not moveUtils:HasMoved(pawn)
-			
-			if active then
-				flash = false
-				break
-			end
-		end
-		
-		GAME.lmn_hotseat.endturn_flash = flash
-		
-		if GAME.lmn_hotseat.endturn_flash then
-			if uiEndTurn.animations.flash:isStopped() then
-				uiEndTurn.animations.flash:start()
-			end
-		else
-			if uiEndTurn.animations.flash:isStarted() then
-				uiEndTurn.animations.flash:stop()
-			end
-		end
-	end)
-	
-	local function reset()
-		destroyVekUi()
-		destroyMechUi()
-		local phase = phases.getPhase()
-		if phase == "vekTurn" then
-			modApi:runLater(createVekUi)
-			modApi:conditionalHook(
-				function()
-					return not Game or not GAME or (Board and not Board:IsBusy())
-				end,
-				function()
-					if not Game or not GAME or not Board then return end
-					
-					flashPlayerPawns(255, 0, 50)
-				end
-			)
-		elseif phase == "mechTurn" then
-			modApi:runLater(createMechUi)
-			modApi:conditionalHook(
-				function()
-					return not Game or not GAME or (Board and not Board:IsBusy())
-				end,
-				function()
-					if not Game or not GAME or not Board then return end
-					
-					flashPlayerPawns(50, 255, 50)
-				end
-			)
+		if active then
+			flash = false
+			break
 		end
 	end
 	
-	modUtils:addResetTurnHook(reset)
-	modUtils:addGameLoadedHook(reset)
+	GAME.lmn_hotseat.endturn_flash = flash
 	
-	-- hard coded exceptions. Not the greatest solution.
-	local exceptions = {
-		"WebbEgg1"
-	}
-	
-	modUtils:addPawnTrackedHook(function(mission, pawn)
-		if phases.isPhase("vekTurn") then
-			pawnTeam:save(mission, pawn:GetId())
-			if not list_contains(exceptions, pawn:GetType()) then
-				pawnTeam:swap(pawn:GetId(), true)
-			end
+	if GAME.lmn_hotseat.endturn_flash then
+		if uiEndTurn.animations.flash:isStopped() then
+			uiEndTurn.animations.flash:start()
 		end
-	end)
+	else
+		if uiEndTurn.animations.flash:isStarted() then
+			uiEndTurn.animations.flash:stop()
+		end
+	end
+end)
+
+local function reset()
+	destroyVekUi()
+	destroyMechUi()
+	local phase = phases.getPhase()
+	if phase == "vekTurn" then
+		modApi:runLater(createVekUi)
+		modApi:conditionalHook(
+			function()
+				return not Game or not GAME or (Board and not Board:IsBusy())
+			end,
+			function()
+				if not Game or not GAME or not Board then return end
+				
+				flashPlayerPawns(255, 0, 50)
+			end
+		)
+	elseif phase == "mechTurn" then
+		modApi:runLater(createMechUi)
+		modApi:conditionalHook(
+			function()
+				return not Game or not GAME or (Board and not Board:IsBusy())
+			end,
+			function()
+				if not Game or not GAME or not Board then return end
+				
+				flashPlayerPawns(50, 255, 50)
+			end
+		)
+	end
 end
+
+modapiext.events.onResetTurn:subscribe(reset)
+modapiext.events.onGameLoaded:subscribe(reset)
+
+-- hard coded exceptions. Not the greatest solution.
+local exceptions = {
+	"WebbEgg1"
+}
+
+modapiext.events.onPawnTracked:subscribe(function(mission, pawn)
+	if phases.isPhase("vekTurn") then
+		pawnTeam:save(mission, pawn:GetId())
+		if not list_contains(exceptions, pawn:GetType()) then
+			pawnTeam:swap(pawn:GetId(), true)
+		end
+	end
+end)
 
 return this

@@ -118,7 +118,7 @@ end
 
 return {
 	load = function(self)
-		modApi:addMissionUpdateHook(function(mission)
+		modApi.events.onMissionUpdate:subscribe(function(mission)
 			local pawnId = Board:GetSelectedPawnId()
 			
 			if pawnId then

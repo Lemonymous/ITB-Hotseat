@@ -12,10 +12,9 @@ local mod = {
 		"lmn_more_bosses",
 		"Wolf_EvolvedVek",
 		"VekHiveAssault",
-	}
+	},
+	dependencies = {"modApiExt", "memedit"},
 }
-
-local modUtils
 
 function mod:metadata()
 	modApi:addGenerationOption("option_hotseat_timeattack_mech", "Turn timer", "Available seconds during each player's turn.\n(Timer is paused while actions play out)", {values = {"Disabled",60,90,120,180}})
@@ -28,8 +27,6 @@ function mod:metadata()
 end
 
 local components = {
-	"ITB-ModUtils/modApiExt/modApiExt",
-	"LApi/LApi",
 	"libs/hotkey",
 	"libs/bonusMission",
 	"libs/bonusStore",

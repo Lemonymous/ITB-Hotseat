@@ -6,7 +6,6 @@ local highlighted = require(path .."libs/highlighted")
 local tileToScreen = require(path .."libs/tileToScreen")
 local suspendLoop = require(path .."libs/suspendLoop")
 local scheduledMissionHook = require(path .."libs/scheduledMissionHook")
-local getModUtils = require(path .."libs/getModUtils")
 local finalize = require(path .."libs/finalize")
 local menu = require(path .."libs/menu")
 local Ui2 = require(path .."ui/Ui2")
@@ -477,33 +476,29 @@ phases.addSpawningStartHook(function()
 	destroyUi()
 end)
 
-sdlext.addGameExitedHook(destroyUi)
-
-function this:load()
-	local modUtils = getModUtils()
-	modApi:addMissionStartHook(destroyUi)
-	modApi:addMissionNextPhaseCreatedHook(destroyUi)
-	modApi:addMissionEndHook(destroyUi)
-	modApi:addMissionUpdateHook(function()
-		if phases.isPhase("spawn") then
-			updateDeployZone()
-		end
-	end)
-	
-	local function reset()
-		destroyUi()
-		if phases.isPhase("spawn") then
-			modApi:runLater(startSpawn)
-		end
-		if phases.isPhase("spawning") then
-			modApi:runLater(function()
-				phases.setPhase("transitMech")
-			end)
-		end
+modApi.events.onGameExited:subscribe(destroyUi)
+modApi.events.onMissionStart:subscribe(destroyUi)
+modApi.events.onMissionNextPhaseCreated:subscribe(destroyUi)
+modApi.events.onMissionEnd:subscribe(destroyUi)
+modApi.events.onMissionUpdate:subscribe(function()
+	if phases.isPhase("spawn") then
+		updateDeployZone()
 	end
-	
-	modUtils:addResetTurnHook(reset)
-	modUtils:addGameLoadedHook(reset)
+end)
+
+local function reset()
+	destroyUi()
+	if phases.isPhase("spawn") then
+		modApi:runLater(startSpawn)
+	end
+	if phases.isPhase("spawning") then
+		modApi:runLater(function()
+			phases.setPhase("transitMech")
+		end)
+	end
 end
+
+modapiext.events.onResetTurn:subscribe(reset)
+modapiext.events.onGameLoaded:subscribe(reset)
 
 return this
