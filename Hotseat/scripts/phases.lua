@@ -62,7 +62,6 @@ examples
 	end)
 ]]
 
-local highlighted = require(path .."libs/highlighted")
 local path = modApi:getCurrentMod().scriptPath
 local hooks = require(path .."libs/hooks")
 local this = {}

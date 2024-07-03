@@ -2,7 +2,6 @@
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local utils = require(path .."libs/utils")
-local highlighted = require(path .."libs/highlighted")
 local tileToScreen = require(path .."libs/tileToScreen")
 local suspendLoop = require(path .."libs/suspendLoop")
 local scheduledMissionHook = require(path .."libs/scheduledMissionHook")
@@ -168,7 +167,7 @@ local function Deploy(loc)
 	end)
 	
 	function ui:getTileCode()
-		local loc = highlighted:Get()
+		local loc = mouseTile()
 		if loc == self.tile and #GAME.lmn_hotseat.spawns > 0 then return nil end
 		
 		return self.DEPLOY_VALID
@@ -249,7 +248,7 @@ local function createUi()
 		if not phases.isPhase("spawn") or menu.isOpen() then return false end
 		
 		local zone = getDeployZone()
-		local loc = highlighted:Get()
+		local loc = mouseTile()
 		local data = GAME.lmn_hotseat
 		
 		if button == 1 and loc and list_contains(zone, loc) then
@@ -281,16 +280,16 @@ local function createUi()
 	end
 	
 	function uiCursor:getTile()
-		return highlighted:Get()
+		return mouseTile()
 	end
 	
 	function uiCursor:getOutline()
 		local zone = getDeployZone()
-		return list_contains(zone, highlighted:Get()) and colors.outline_valid or colors.outline_invalid
+		return list_contains(zone, mouseTile()) and colors.outline_valid or colors.outline_invalid
 	end
 	
 	function uiCursor:getTileCode()
-		local loc = highlighted:Get()
+		local loc = mouseTile()
 		if loc and GAME.lmn_hotseat.deployed[p2idx(loc)] then return self.DEPLOY_SWAP end
 		
 		local zone = getDeployZone()
@@ -421,7 +420,7 @@ local function startSpawn()
 	createUi()
 	suspendLoop.start(function()
 		if phases.isPhase("spawn") then
-			local loc = highlighted:Get()
+			local loc = mouseTile()
 			local zone = getDeployZone()
 			
 			for _, p in ipairs(zone) do
