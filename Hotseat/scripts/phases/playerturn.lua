@@ -2,7 +2,6 @@
 local getModUtils = require(path .."libs/getModUtils")
 local path = modApi:getCurrentMod().scriptPath
 local tileToScreen = require(path .."libs/tileToScreen")
-local selected = require(path .."libs/selected")
 local moveUtils = require(path .."libs/moveUtils")
 local isNeutral = require(path .."libs/isNeutral")
 local isPowered = require(path .."libs/isPowered")
@@ -260,7 +259,7 @@ end
 local function endVekTurn(self)
 	if not phases.isPhase("vekTurn") then return false end
 	
-	local selected = selected:Get()
+	local selected = Board:GetSelectedPawn()
 	if selected and selected:IsActive() and selected:GetTeam() == TEAM_PLAYER then
 		deselect:pawn(selected)
 	end

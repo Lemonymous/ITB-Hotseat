@@ -2,7 +2,6 @@
 local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local getModUtils = require(path .."libs/getModUtils")
-local selected = require(path .."libs/selected")
 local deselect = require(path .."libs/deselect")
 local isNeutral = require(path .."libs/isNeutral")
 local menu = require(path .."libs/menu")
@@ -25,7 +24,7 @@ local function endTurn()
 	for _, id in ipairs(extract_table(Board:GetPawns(TEAM_PLAYER))) do
 		local pawn = Board:GetPawn(id)
 		if not isNeutral(id) then
-			local selected = selected:Get()
+			local selected = Board:GetSelectedPawn()
 			if selected and selected:IsActive() and selected:GetTeam() == TEAM_PLAYER then
 				deselect:pawn(selected)
 			end

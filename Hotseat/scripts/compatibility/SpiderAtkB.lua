@@ -22,28 +22,6 @@ local function resetAll()
 	resetTargets()
 end
 
-local function getSelectedPawn()
-	local pawns = Board:GetPawns(TEAM_ANY)
-	for i = 1, pawns:size() do
-		local pawn = Board:GetPawn(pawns:index(i))
-		if pawn and pawn:IsSelected() then
-			return pawn
-		end
-	end
-	
-	return nil
-end
-
-local function getSelectedPawnId()
-	local selectedPawn = getSelectedPawn()
-	
-	if selectedPawn then
-		return selectedPawn:GetId()
-	end
-	
-	return nil
-end
-
 local function getTargetArea(p)
 	local plist = PointList()
 	local traversed = {}
@@ -141,7 +119,7 @@ end
 return {
 	load = function(self)
 		modApi:addMissionUpdateHook(function(mission)
-			local pawnId = getSelectedPawnId()
+			local pawnId = Board:GetSelectedPawnId()
 			
 			if pawnId then
 				local pawn = Board:GetPawn(pawnId)
