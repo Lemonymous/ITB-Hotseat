@@ -9,7 +9,7 @@ end
 
 LOG("Hotseat: ".. id .." found. Running compatibility code.")
 
-local resourcePath = mod_loader.mods[modApi.currentMod].resourcePath
+local resourcePath = modApi:getCurrentMod().resourcePath
 local path = resourcePath .."scripts/"
 local getModUtils = require(path .."libs/getModUtils")
 local weaponPreview = require(path .."weaponPreview/api")
