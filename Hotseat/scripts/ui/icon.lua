@@ -1,5 +1,5 @@
 
-local path = mod_loader.mods[modApi.currentMod].resourcePath
+local path = modApi:getCurrentMod().resourcePath
 local scripts = path .."scripts/"
 local cache = require(scripts .."libs/cacheSurface")
 local menu = require(scripts .."libs/menu")

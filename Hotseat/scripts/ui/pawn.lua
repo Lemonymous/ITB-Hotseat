@@ -1,5 +1,5 @@
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
+local path = modApi:getCurrentMod().scriptPath
 local tileToScreen = require(path .."libs/tileToScreen")
 local stringize = require(path .."libs/stringize")
 local cache = require(path .."libs/cacheSurface")

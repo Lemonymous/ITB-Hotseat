@@ -1,5 +1,5 @@
 
-local mod = mod_loader.mods[modApi.currentMod]
+local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local menu = require(path .."libs/menu")
 local clip = require(path .."libs/clip")

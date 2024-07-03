@@ -1,7 +1,7 @@
 
-local mod = mod_loader.mods[modApi.currentMod]
 local cache = require(mod.scriptPath .."libs/cacheSurface")
 local stringize = require(mod.scriptPath .."libs/stringize")
+local mod = modApi:getCurrentMod()
 local path = "img/combat/icons/damage_"
 
 modApi:appendAsset("img/combat/icons/damage_dash_small.png", mod.resourcePath .."img/dash.png")

@@ -1,5 +1,5 @@
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
+local path = modApi:getCurrentMod().scriptPath
 local Ui2 = require(path .."ui/Ui2")
 local DecoButton2 = require(path .."ui/deco/decoButton2")
 local this = Class.inherit(Ui2)

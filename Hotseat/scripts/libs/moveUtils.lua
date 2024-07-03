@@ -7,7 +7,7 @@
 -- needs to be loaded with the function 'load' before use.
 -- *modified for hotseat
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
+local path = modApi:getCurrentMod().scriptPath
 local teamTurn = require(path .."libs/teamTurn")
 local getModUtils = require(path .."libs/getModUtils")
 local this = {}

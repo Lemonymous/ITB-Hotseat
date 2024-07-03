@@ -3,7 +3,7 @@
 	
 ]]
 
-local mod = mod_loader.mods[modApi.currentMod]
+local mod = modApi:getCurrentMod()
 local missionExt = require(mod.scriptPath .."libs/missionExt")
 local name = mod.id .."_SuspendLoop"
 local this = { funcs = {} }

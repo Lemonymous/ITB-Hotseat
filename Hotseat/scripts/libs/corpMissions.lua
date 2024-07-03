@@ -15,7 +15,7 @@
 ----------------------------------------------------------------------------------------
 -- place the following at the top of any lua file that wants to use the library.
 --
--- local path = mod_loader.mods[modApi.currentMod].scriptPath
+-- local path = modApi:getCurrentMod().scriptPath
 -- local corpMissions = require(path .."corpMissions")
 --
 ----------------------------------------------------------------------------------------

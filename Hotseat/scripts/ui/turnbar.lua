@@ -1,5 +1,5 @@
 
-local path = mod_loader.mods[modApi.currentMod].resourcePath
+local path = modApi:getCurrentMod().resourcePath
 local Ui2 = require(path .."scripts/ui/Ui2")
 local DecoSet = require(path .."scripts/ui/deco/decoSet")
 local font36 = sdlext.font("fonts/JustinFont11Bold.ttf", 36)

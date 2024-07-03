@@ -1,5 +1,5 @@
 
-local mod = mod_loader.mods[modApi.currentMod]
+local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local bonusMission = require(path .."libs/bonusMission")
 local bonusStore = require(path .."libs/bonusStore")

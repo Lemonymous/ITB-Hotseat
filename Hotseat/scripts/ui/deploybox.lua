@@ -1,5 +1,5 @@
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
+local path = modApi:getCurrentMod().scriptPath
 local font = sdlext.font("fonts/JustinFont11Bold.ttf", 24)
 local menu = require(path .."libs/menu")
 local clip = require(path .."libs/clip")

@@ -1,5 +1,5 @@
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
+local path = modApi:getCurrentMod().scriptPath
 local clip = require(path .."libs/clip")
 local Ui2 = require(path .."ui/Ui2")
 local UiCover = require(path .."ui/cover")

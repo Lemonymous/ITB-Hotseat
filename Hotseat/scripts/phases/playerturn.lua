@@ -1,6 +1,6 @@
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
 local getModUtils = require(path .."libs/getModUtils")
+local path = modApi:getCurrentMod().scriptPath
 local tileToScreen = require(path .."libs/tileToScreen")
 local selected = require(path .."libs/selected")
 local moveUtils = require(path .."libs/moveUtils")

@@ -1,5 +1,5 @@
 
-local mod = mod_loader.mods[modApi.currentMod]
+local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local getModUtils = require(path .."libs/getModUtils")
 local selected = require(path .."libs/selected")

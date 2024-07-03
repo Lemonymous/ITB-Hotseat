@@ -1,5 +1,5 @@
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
+local path = modApi:getCurrentMod().scriptPath
 local menu = require(path .."libs/menu")
 local Ui2 = require(path .."ui/Ui2")
 local DecoSolid2 = require(path .."ui/deco/decoSolid2")

@@ -2,7 +2,7 @@
 -- scheduled hooks which get erased when exiting the game or mission ends.
 -- no important game logic should be added using this,
 -- or additional code needs to be provided to reschedule hooks at game load/reset.
-local mod = mod_loader.mods[modApi.currentMod]
+local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local getModUtils = require(path .."libs/getModUtils")
 local this = {}

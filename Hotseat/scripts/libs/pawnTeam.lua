@@ -1,5 +1,5 @@
 
-local mod = mod_loader.mods[modApi.currentMod]
+local mod = modApi:getCurrentMod()
 local path = mod.scriptPath
 local data = mod.id .."_pawnTeam"
 local isNeutral = require(path .."libs/isNeutral")

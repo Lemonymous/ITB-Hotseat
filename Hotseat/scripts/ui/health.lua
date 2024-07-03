@@ -1,5 +1,5 @@
 
-local path = mod_loader.mods[modApi.currentMod].resourcePath
+local path = modApi:getCurrentMod().resourcePath
 local scripts = path .."scripts/"
 local clip = require(scripts .."libs/clip")
 local DecoSet = require(scripts .."ui/deco/decoSet")

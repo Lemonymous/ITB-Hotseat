@@ -1,6 +1,6 @@
 
-local path = mod_loader.mods[modApi.currentMod].scriptPath
 local getModUtils = require(path .."libs/getModUtils")
+local path = modApi:getCurrentMod().scriptPath
 local this = {}
 
 function this.IsVekTurn()
